@@ -22,17 +22,22 @@ function agregarAmigo() {
         return;
     }
     
-    // Verificar que no existan duplicados, si existe mostrar alerta
-    if (listaAmigosIngresados.includes(nombreAmigo)) {
+    // NORMALIZACIÓN: Para evitar poder ingresar el mismo nombre con diferencia de minusculas y mayusculas
+    const listaEnMinusculas = listaAmigosIngresados.map(amigo => amigo.toLowerCase());
+    // Convertir nombre actual a minúsculas para comparar
+    const nombreEnMinusculas = nombreAmigo.toLowerCase();
+
+    // Verificar duplicados, con minusculas y mayusculas, en lista normalizada
+    if (listaEnMinusculas.includes(nombreEnMinusculas)) {
         mensaje = 'ERROR: ese nombre ya existe, intente nuevamente';
         asignarTextoElemento('.section-title', mensaje);
     
-    // Si no hay error, se actualiza el Array y se borra el nombre ingresado del Input   
+    // Si no hay error, se actualiza el Array original (conservando las mayúsculas originales)
     } else {
         listaAmigosIngresados.push(nombreAmigo);
         actualizarLista();
 
-        mensaje = "Digite el nombre de sus amigos"
+        mensaje = "Digite el nombre de sus amigos";
         asignarTextoElemento('.section-title', mensaje);
     }
     limpiarNombre();
@@ -58,24 +63,26 @@ function actualizarLista() {
 
 // Ejecuta el sorteo y devuelve los nombres de forma aleatoria
 function sortearAmigo() {
-    // Verifica si existen nombres por sortear, de lo contrario dispara un alerta
+    // Verifica si existen nombres por sortear, de lo contrario muestra advertencia
     if (listaAmigosIngresados.length === 0) {
         mensaje = "No quedan amigos por sortear.";
         asignarTextoElemento('.section-title', mensaje);
         return null;
-    }
-    // Generación de numeros aletorios basado en indice de los elementos
+    } 
+       
+    // Generación de números aleatorios basado en índice de los elementos
     const indiceAleatorio = Math.floor(Math.random() * listaAmigosIngresados.length);
     
     // Elimina el amigo sorteado del Array de amigos ingresados
     const amigoSorteado = listaAmigosIngresados.splice(indiceAleatorio, 1)[0];
-    listaAmigosSorteados.push(amigoSorteado); // Registro historico de elementos sorteados
+    listaAmigosSorteados.push(amigoSorteado); // Registro histórico de elementos sorteados
 
-    // Actualizar lista de nombres restantes, y visualizacion de ultimo nombre sorteado
+    // Actualizar lista de nombres restantes
     actualizarLista();
-    
+
+    // Mensaje corregido con comillas invertidas (``) y el punto (.) de la clase CSS
     mensaje = `El amigo Secreto es: ${amigoSorteado}`;
-    asignarTextoElemento('section-title', mensaje);
+    asignarTextoElemento('.section-title', mensaje);
 
     // Verificación en consola para pruebas técnicas
     console.log("Amigos restantes:", listaAmigosIngresados);
@@ -83,3 +90,4 @@ function sortearAmigo() {
     
     return amigoSorteado;
 }
+
