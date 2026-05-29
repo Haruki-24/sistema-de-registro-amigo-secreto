@@ -61,7 +61,7 @@ function sortearAmigo() {
     // Verifica si existen nombres por sortear, de lo contrario dispara un alerta
     if (listaAmigosIngresados.length === 0) {
         mensaje = "No quedan amigos por sortear.";
-        asignarTextoElemento('.section-title', mensaje)
+        asignarTextoElemento('.section-title', mensaje);
         return null;
     }
     // Generación de numeros aletorios basado en indice de los elementos
@@ -73,7 +73,8 @@ function sortearAmigo() {
 
     // Actualizar lista de nombres restantes, y visualizacion de ultimo nombre sorteado
     actualizarLista();
-    mensaje = `Amigo sorteado: ${amigoSorteado}`;
+    
+    mensaje = `El amigo Secreto es: ${amigoSorteado}`;
     asignarTextoElemento('section-title', mensaje);
 
     // Verificación en consola para pruebas técnicas
